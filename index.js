@@ -30,14 +30,7 @@ function RenderItem(todoItem){
       
      delet.addEventListener("click" , ()=>{
         for (let i=0 ; i<todo_list.length; i++){
-            const list_item = todo_list[i]
-            if(list_item.title===todoItem.title){
-                
-                remove(list_item.title)
-                syncSrorage()
-                RenderItem()
-                
-             }
+            find_delet(title)
         }
      })
 
@@ -91,13 +84,23 @@ function addItem(item){
       todo_list.push(next_item)
       syncSrorage()
 }
+function find_delet(title){
+    for (let i=0 ; i<todo_list.length; i++){
+        const list_item = todo_list[i]
+         if(list_item.title===todoItem.title){
+            remove(todoItem)
+            
+         }
+         
+         syncSrorage()
+       }
+}
 function remove(item) {
     const remove_item = {
         title : item.title , 
         status : item.status
     }
     todo_list.pup(remove_item)
-    syncSrorage()
 }
 
 // run your app
