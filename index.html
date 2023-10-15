@@ -26,6 +26,13 @@
         padding: 0.5rem;
         border-bottom: 1px solid #eee;
     }
+    .list .delet_btn{
+        margin-left: 50px;
+        width: 60px;
+        height: 25px;
+        background-color: rgb(74, 62, 62);
+        color: red;
+    }
 
 </style>
 <body>
@@ -33,11 +40,20 @@
         <div class="form">
             <input  type="text" placeholder="write to do item...." id="title">
             <button id="save-btn">save</button>
+            
+            <br /><br />
+            status:
+            <select>
+                <option value="done">Done</option>
+                <option value="todo">Todo</option>
+                <option value="all">All</option>
+            </select>
          </div>
          <div class="list">
             <!-- <div class="item">
                 <input type="checkbox" name="" id="">
                 <span>item1</span>
+                <button id="delet_btn" class="delet_btn" >delet</button>
                 
             </div> -->
             <!-- <div class="item">
@@ -45,6 +61,7 @@
                 <span>item2</span>
                 
             </div> -->
+            
          </div>
     </div>
  <script src="/index.js"></script>
