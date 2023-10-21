@@ -1,6 +1,9 @@
 const save_button = document.querySelector("#save-btn");
 const input_title = document.querySelector("#title");
 const list = document.querySelector(".list");
+const filterse = document.querySelector("#filters")
+
+
 
 let todo_list = []
 //work with DOM
@@ -25,13 +28,17 @@ function RenderItem(todoItem){
       Item.appendChild(checkbox)
       Item.appendChild(span)
       Item.appendChild(delet)
-
       list.appendChild(Item)
+
       
-     delet.addEventListener("click" , ()=>{
-        for (let i=0 ; i<todo_list.length; i++){
-            find_delet(title)
-        }
+      filterse.addEventListener("change" , ()=>{
+        filterSelect(filterse.value)
+        
+      })
+      
+      delet.addEventListener("click" , ()=>{ 
+        remove(todoItem.title)
+        
      })
 
       checkbox.addEventListener("click" , ()=>{
@@ -40,7 +47,10 @@ function RenderItem(todoItem){
       })
       
 }
+
 function RenderList(){
+   list.innerHTML=""
+   
     for (let i = 0 ; i< todo_list.length ; i++){
         const title = todo_list[i] 
         RenderItem(title)
@@ -51,7 +61,7 @@ function clear_input(){
     input_title.value = "";
 }
 //work with storage
-function syncSrorage(item) {
+function syncSrorage() {
     const next_list = JSON.stringify(todo_list)
     localStorage.setItem("my_list", next_list) 
 }
@@ -65,6 +75,51 @@ function load_from_storage(){
 
 
 //functionality
+function filterSelect(events){
+    console.log(events)
+    let temp =  []
+        if(events === "done"){
+            for (let i=0 ; i<todo_list.length; i++){
+               if(todo_list.status===true){
+                    temp.push(todo_list[i])
+               }
+            }
+            RenderItem()
+
+            if(events === "todo"){
+                for (let i=0 ; i<todo_list.length; i++){
+                   if(todo_list.status===false){
+                        temp.push(todo_list[i])
+                   } 
+                } 
+            
+                }
+                RenderItem()
+                
+            }
+        }
+            
+
+       
+
+    
+       
+    /*    switch(event){
+                 case done: {todo_list.filter((item)=>{
+                    const listFilter = todo_list.status === true
+                 })                                        
+                 break;}
+                 case todo: {todo_list.filter((item)=>{
+                    const listFilter = todo_list.status === false
+                 })
+                 break;}
+                 
+                default: todo_list.filter((item)=>{
+                    const listFilter= (item.status===true && item.status===false)
+                })} */
+         
+
+
 function toggleStatus(title){
     for (let i=0 ; i<todo_list.length; i++){
         const list_item = todo_list[i]
@@ -84,24 +139,48 @@ function addItem(item){
       todo_list.push(next_item)
       syncSrorage()
 }
-function find_delet(title){
+function Donefunc(item){
+    todo_list.filter((item) , ()=>{
+         return item.status===true
+    })
+        
+    }
+
+
+
+/* function filters(filterItem){
     for (let i=0 ; i<todo_list.length; i++){
         const list_item = todo_list[i]
-         if(list_item.title===todoItem.title){
-            remove(todoItem)
+        
+        if(list_item.status===filterItem){
+           /*  list_item.filter((item)=>{
+                return list_item[i]
+            }) */
+          /*   console.log(list_item[i])
+            
+        }
+        RenderItem()
+}}  */
+function remove(title){
+    for (let i=0 ; i<todo_list.length; i++){
+        const list_item = todo_list[i]
+         if(list_item.title===title){
+            todo_list.splice(i,1)
             
          }
          
          syncSrorage()
+         RenderList()
        }
 }
-function remove(item) {
+/* function remove(title) {
+    console.log("remove" , title)
     const remove_item = {
         title : item.title , 
         status : item.status
     }
-    todo_list.pup(remove_item)
-}
+    todo_list.splice(i, 1)
+} */
 
 // run your app
 function onAddItem(){
